@@ -1,0 +1,17 @@
+# Node.js dependencies
+rb_backend/node_modules/
+rb_frontend/node_modules/
+
+# Vite build output 
+rb_frontend/dist/
+
+# VSCode settings
+.vscode/
+
+# System files
+.DS_Store
+Thumbs.db
+
+# Env files 
+rb_backend/.env
+rb_frontend/.env
