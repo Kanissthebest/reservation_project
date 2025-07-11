@@ -34,7 +34,6 @@ function RechercheVol() {
       }
 
       setVoltrouve(result);
-      localStorage.setItem('detailsVol', JSON.stringify(result));
     }).catch(err => {
       setError("Erreur de connexion au serveur.");
       console.error("Erreur fetch:", err);

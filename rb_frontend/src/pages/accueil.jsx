@@ -6,6 +6,10 @@ import VolsDisponibles from "../components/volDisponibles";
 function Accueil() {
   const user = JSON.parse(localStorage.getItem("connectedUser"));
   const navigate = useNavigate();
+  //necessité de cette partie(useEffect)
+  //elle permet l'application de garder un utilisateur avec un role=admin de ne pas se retrouver sur la page d'accueil 
+  //de simple utilisateur(role=utilisateur) pendant qu'il appui la touche retour du navigateur ou n'importe quel autre 
+  //circonstance
   useEffect(()=>{
     if(user?.role === 'admin')
   {

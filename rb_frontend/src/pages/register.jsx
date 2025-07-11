@@ -42,7 +42,7 @@ function Register() {
       if (res.ok) {
         setIsRegistered(true);
         setMessage(data.message);
-        setTimeout(() => navigate("/login"), 4000);
+        setTimeout(() => navigate("/login"), 3000);
       } else {
         setMessage(data.message || "Erreur lors de l'inscription");
       }

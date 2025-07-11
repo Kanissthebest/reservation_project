@@ -4,13 +4,15 @@ const mysql = require('mysql');
 const bcrypt = require('bcryptjs')
 const app = express(); //declaration d'une variable app en l'autorisant à utiliser express()
 // la variable db declarer ci-dessous permet de creer la connexion entre le backend(index.js) et la base de donnée dans phpmyadmin
+// ✅ Connexion MySQL configurable via variables d'environnement Railway
 const db = mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password:'',
-    database:'odc',// nom de la base de donnée identique avec celui que tu crée dans phpmydadmin
-    port:3306 //note: fais attention sur cette ligne car la valeur du port ne doit pas etre entre guillemet.
-})
+  host: process.env.DB_HOST || 'localhost',  // hôte Railway ou fallback localhost
+  user: process.env.DB_USER || 'root',       // utilisateur Railway ou fallback root
+  password: process.env.DB_PASSWORD || '',   // mot de passe Railway ou fallback vide
+  database: process.env.DB_NAME || 'odc',    // nom BDD Railway ou fallback local
+  port: process.env.DB_PORT ? parseInt(process.env.DB_PORT) : 3306  // port Railway ou fallback 3306
+});
+
 
 // Cette partie permet de verifier si la connexion au serveur à reussi(backend et phpmyadmin)
 db.connect((err)=>{
@@ -249,7 +251,7 @@ app.get('/les-reservations', (req, res) => {
 });
 
 
-//----------------------------------------Recuperation de la liste des vols-------------------------------------------
+//----------------------------------------Recuperation de la liste des vols---------------------------------------------------
 app.get('/vols', (req,res)=>{
     const sql = 'SELECT * FROM vols';
     db.query(sql, (err, result)=>{
@@ -329,7 +331,7 @@ app.get('/admin/dashboard', (req, res) => {
         });
     });
 });
-//-----------------------------------------Graphique--------------------------------------------------------
+//-----------------------------------------Graphique-------------------------------------------------
 app.get('/admin/stats-reservations-par-vol', (req, res) => {
  const sql = `
   SELECT CONCAT(v.ville_depart, ' → ', v.ville_destination) AS trajet,
@@ -350,7 +352,7 @@ app.get('/admin/stats-reservations-par-vol', (req, res) => {
 });
 
 
-//-------------------------------------------supprimer un vol----------------------------------------------
+//-------------------------------------------supprimer un vol-----------------
 app.delete('/vols/:id', (req, res) => {
   const id = req.params.id;
   const sql = 'DELETE FROM vols WHERE id = ?';
@@ -368,7 +370,7 @@ app.delete('/vols/:id', (req, res) => {
     res.status(200).json({ message: 'Vol supprimé avec succès' });
   });
 });
-//--------------------------------------modifier-----------------------------------------
+//--------------------------------------modifier------------
 app.put('/vols/:id', (req, res) => {
   const id = req.params.id;
   const { ville_depart, ville_destination, date_depart, heure_depart, compagnie, classe, prix, image, nb_places } = req.body;
