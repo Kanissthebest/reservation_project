@@ -1,6 +1,6 @@
 const express = require('express'); //permet d'utiliser gerer les routes en utilisant les requetes sql post dans notre cas ici
 const cors = require('cors'); // permet d'autoriser les requetes http(entre le methode get dans le backend et le fetch dans le front)
-const mysql = require('mysql');
+const mysql = require('mysql2');
 const bcrypt = require('bcryptjs')
 const app = express(); //declaration d'une variable app en l'autorisant à utiliser express()
 // la variable db declarer ci-dessous permet de creer la connexion entre le backend(index.js) et la base de donnée dans phpmyadmin
