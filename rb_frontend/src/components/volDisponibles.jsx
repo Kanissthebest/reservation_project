@@ -6,7 +6,7 @@ function VolsDisponibles(){
     const[volsDisponibles, setVolsDisponibles] = useState([]);
 
     useEffect(()=>{
-        fetch('http://localhost:9100/volsDisponibles')
+        fetch(`${import.meta.env.VITE_API_URL}/volsDisponibles`)
         .then(res => res.json())
         .then(data => setVolsDisponibles(data))
         .catch(err => console.log(err))

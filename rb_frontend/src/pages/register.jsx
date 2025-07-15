@@ -33,7 +33,7 @@ function Register() {
     try {
       await registerSchema.validate(user, { abortEarly: false });
       setErrors({});
-      const res = await fetch("http://localhost:9100/user/register", {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/user/register`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(user),

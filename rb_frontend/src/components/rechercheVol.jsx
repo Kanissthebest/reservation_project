@@ -20,7 +20,7 @@ function RechercheVol() {
     e.preventDefault();
     setError(''); // ✅ Réinitialise les erreurs précédentes
 
-    fetch('http://localhost:9100/recherche/vols', {
+    fetch(`${import.meta.env.VITE_API_URL}/recherche/vols`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(formData)
@@ -47,39 +47,48 @@ function RechercheVol() {
   return (
     <>
       <form onSubmit={handleSubmit} className="row g-3 mb-4">
-        <div className="col-md-4">
-          <input
-            type="text"
-            name="ville_depart"
-            className="form-control"
-            placeholder="Ville de départ"
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div className="col-md-4">
-          <input
-            type="text"
-            name="ville_destination"
-            className="form-control"
-            placeholder="Ville de destination"
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div className="col-md-3">
-          <input
-            type="date"
-            name="date_depart"
-            className="form-control"
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div className="col-md-1">
-          <button type="submit" className="btn btn-primary w-100">Rechercher</button>
-        </div>
-      </form>
+  <div className="col-md-4">
+    <input
+      type="text"
+      name="ville_depart"
+      className="form-control"
+      placeholder="Ville de départ"
+      onChange={handleChange}
+      required
+    />
+  </div>
+  <div className="col-md-4">
+    <input
+      type="text"
+      name="ville_destination"
+      className="form-control"
+      placeholder="Ville de destination"
+      onChange={handleChange}
+      required
+    />
+  </div>
+  <div className="col-md-3">
+    <input
+      type="date"
+      name="date_depart"
+      className="form-control"
+      onChange={handleChange}
+      required
+    />
+  </div>
+
+ <div className="col-md-1 d-grid">
+  <button
+    type="submit"
+    className="btn btn-primary"
+    aria-label="Rechercher"
+  >
+    <i className="bi bi-search"></i>
+  </button>
+</div>
+
+</form>
+
 
       {/*  Affichage de l’erreur s’il y en a */}
       {error && <p className="text-danger">{error}</p>}

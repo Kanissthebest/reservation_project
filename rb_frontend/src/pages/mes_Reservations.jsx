@@ -6,7 +6,7 @@ function MesReservation() {
 
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("connectedUser"));
-    fetch("http://localhost:9100/mes-reservation", {
+    fetch(`${import.meta.env.VITE_API_URL}/mes-reservation`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

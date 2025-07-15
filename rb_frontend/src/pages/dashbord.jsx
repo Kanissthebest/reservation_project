@@ -16,7 +16,7 @@ function Dashboard() {
 
   // ✅ Statistiques globales (cartes)
   useEffect(() => {
-    fetch("http://localhost:9100/admin/dashboard")
+    fetch(`${import.meta.env.VITE_API_URL}/admin/dashboard`)
       .then((res) => res.json())
       .then((data) => setStats(data))
       .catch(() => setMessage("Erreur lors du chargement du dashboard"));
@@ -24,7 +24,7 @@ function Dashboard() {
 
   // ✅ Récupération du nombre de réservations par vol
   useEffect(() => {
-    fetch("http://localhost:9100/admin/stats-reservations-par-vol")
+    fetch(`${import.meta.env.VITE_API_URL}/admin/stats-reservations-par-vol`)
       .then((res) => res.json())
       .then((data) => {
         console.log("Données reçues pour le graphique :", data);

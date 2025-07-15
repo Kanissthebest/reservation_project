@@ -15,7 +15,7 @@ function Reservation() {
   const [errors, setErrors] = useState({})
 
   useEffect(() => {
-    fetch(`http://localhost:9100/vols/${id}`)
+    fetch(`${import.meta.env.VITE_API_URL}/vols/${id}`)
       .then((res) => res.json())
       .then((data) => setVol(data))
       .catch((err) => {
@@ -68,7 +68,7 @@ function Reservation() {
       setMessage("Aucune place disponible pour ce vol");
       return;
     }
-    fetch("http://localhost:9100/reservation", {
+    fetch(`${import.meta.env.VITE_API_URL}/reservation`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

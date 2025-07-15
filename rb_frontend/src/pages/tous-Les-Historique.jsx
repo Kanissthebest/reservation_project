@@ -5,7 +5,7 @@ function TousLesReservation() {
   const [message, setMessage] = useState("");
 
   useEffect(() => {
-    fetch("http://localhost:9100/les-reservations")
+    fetch(`${import.meta.env.VITE_API_URL}/les-reservations`)
       .then((res) => res.json())
       .then((data) => {
         if (Array.isArray(data)) {

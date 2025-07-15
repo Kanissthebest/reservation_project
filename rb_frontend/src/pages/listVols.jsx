@@ -16,7 +16,7 @@ function ListeVols() {
   });
 
   const chargerVols = () => {
-    fetch('http://localhost:9100/vols')
+    fetch(`${import.meta.env.VITE_API_URL}/vols`)
       .then(res => res.json())
       .then(data => setVols(data));
   };
@@ -38,8 +38,8 @@ function ListeVols() {
     e.preventDefault();
     const isEdit = form.id !== null;
     const url = isEdit
-      ? `http://localhost:9100/vols/${form.id}`
-      : 'http://localhost:9100/ajout-vol';
+      ? `${import.meta.env.VITE_API_URL}/vols/${form.id}`
+      : `${import.meta.env.VITE_API_URL}/ajout-vol`;
 
     const method = isEdit ? 'PUT' : 'POST';
 
@@ -70,7 +70,7 @@ function ListeVols() {
 
   const handleDelete = (id) => {
     if (!window.confirm("Confirmer la suppression ?")) return;
-    fetch(`http://localhost:9100/vols/${id}`, {
+    fetch(`${import.meta.env.VITE_API_URL}/vols/${id}`, {
       method: 'DELETE'
     })
       .then(res => res.json())
