@@ -32,8 +32,14 @@ function Reservation() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const utilisateur = JSON.parse(localStorage.getItem("connectedUser"));
-    if (!utilisateur) {
+    let user = null;
+  try{
+    const stored = localStorage.getItem("connectedUser")
+    user = stored ? JSON.parse(stored) : null;
+  } catch(err){
+    console.error("Erreur lors du parsing", err)
+  }
+    if (!user) {
       alert("Vous devez être connecté pour réserver");
       return navigate("/login");
     }
@@ -60,7 +66,7 @@ function Reservation() {
       setErrors(newErrors)
     }
 
-    if (!vol?.id || !utilisateur?.id) {
+    if (!vol?.id || !user?.id) {
       setMessage("Information invalide");
       return;
     }
@@ -74,7 +80,7 @@ function Reservation() {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({ 
-         utilisateur_id: utilisateur.id,
+         utilisateur_id: user.id,
          vol_id: vol.id,
          nom:form.nom,
          numeroCarte:form.numeroCarte,

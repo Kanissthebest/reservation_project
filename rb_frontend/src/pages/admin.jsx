@@ -2,7 +2,14 @@ import { useEffect } from "react";
 import { Link, useNavigate, Outlet } from "react-router-dom";
 
 function Admin() {
-  const user = JSON.parse(localStorage.getItem("connectedUser") || "null");
+  let user = null;
+  try{
+    const stored = localStorage.getItem("connectedUser")
+    user = stored ? JSON.parse(stored) : null;
+  } catch(err){
+    console.error("Erreur lors du parsing", err)
+  }
+  
   const navigate = useNavigate();
 
   const disconnect = (e) => {
@@ -13,16 +20,19 @@ function Admin() {
 
   useEffect(() => {
     if (!user || user.role !== "admin") {
-      navigate("/login");
       setTimeout(
         () =>
-          alert(
-            "Contenu réservé uniquement aux admins, veuillez vous connecter"
-          ),
+        {
+          alert("Contenu réservé uniquement aux admins, veuillez vous connecter !");
+          navigate("/login");
+        },
         2000
       );
     }
-  }, [user, navigate]);
+  }, []);
+  if (!user || user.role !== "admin"){
+    return null
+  }
 
   return (
     <div className="container my-4">

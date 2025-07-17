@@ -5,7 +5,13 @@ function MesReservation() {
   const [message, setMessage] = useState("");
 
   useEffect(() => {
-    const user = JSON.parse(localStorage.getItem("connectedUser"));
+    let user = null;
+  try{
+    const stored = localStorage.getItem("connectedUser")
+    user = stored ? JSON.parse(stored) : null;
+  } catch(err){
+    console.error("Erreur lors du parsing", err)
+  }
     fetch(`${import.meta.env.VITE_API_URL}/mes-reservation`, {
       method: "POST",
       headers: {
@@ -14,7 +20,15 @@ function MesReservation() {
       body: JSON.stringify({ utilisateur_id: user.id }),
     })
       .then((res) => res.json())
-      .then((data) => setVol(data))
+      .then((data) =>{
+        if(Array.isArray(data)){
+          setVol(data)
+        }else{
+          console.warn('Reponse inattendu', data)
+          setVol([])
+        }
+      }
+         )
       .catch((err) => {
         console.error(err);
         setMessage("Erreur de chargement de l'historique");

@@ -18,7 +18,14 @@ function ListeVols() {
   const chargerVols = () => {
     fetch(`${import.meta.env.VITE_API_URL}/vols`)
       .then(res => res.json())
-      .then(data => setVols(data));
+      .then(data => {
+        if(Array.isArray(data)){
+          setVols(data)
+        }else{
+          console.warn('Resultatat inattendu', data)
+          setVols([])
+        }
+      });
   };
 
   useEffect(() => {

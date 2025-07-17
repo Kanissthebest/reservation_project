@@ -8,7 +8,14 @@ function VolsDisponibles(){
     useEffect(()=>{
         fetch(`${import.meta.env.VITE_API_URL}/volsDisponibles`)
         .then(res => res.json())
-        .then(data => setVolsDisponibles(data))
+        .then(data =>{
+          if(Array.isArray(data)){
+            setVolsDisponibles(data)
+          }else{
+            console.warn('Resultat inattendu', data)
+            setVolsDisponibles([])
+          }  
+        } )
         .catch(err => console.log(err))
     }, [])
     const showContent = (vol) => {

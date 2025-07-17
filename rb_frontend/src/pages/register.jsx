@@ -57,7 +57,7 @@ function Register() {
     }
   };
 
-  if (isRegistered) {
+  if (isRegistered === true) {
     return (
       <div className="container my-5">
         <div className="alert alert-success text-center">{message}</div>

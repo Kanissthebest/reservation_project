@@ -4,7 +4,13 @@ import RechercheVol from "../components/rechercheVol";
 import VolsDisponibles from "../components/volDisponibles";
 
 function Accueil() {
-  const user = JSON.parse(localStorage.getItem("connectedUser"));
+  let user = null
+  try{
+    const stored = localStorage.getItem("connectedUser");
+    user = stored ? JSON.parse(stored) : null;
+  } catch(err){
+    console.error('erreur lors du parsing', err)
+  }
   const navigate = useNavigate();
   //necessité de cette partie(useEffect)
   //elle permet l'application de garder un utilisateur avec un role=admin de ne pas se retrouver sur la page d'accueil 
