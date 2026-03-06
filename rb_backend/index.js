@@ -6,22 +6,20 @@ const app = express(); //declaration d'une variable app en l'autorisant à utili
 // la variable db declarer ci-dessous permet de creer la connexion entre le backend(index.js) et la base de donnée dans phpmyadmin
 // ✅ Connexion MySQL configurable via variables d'environnement Railway
 const db = mysql.createConnection({
-  host: process.env.DB_HOST || 'localhost',  // hôte Railway ou fallback localhost
-  user: process.env.DB_USER || 'root',       // utilisateur Railway ou fallback root
-  password: process.env.DB_PASSWORD || '',   // mot de passe Railway ou fallback vide
-  database: process.env.DB_NAME || 'odc',    // nom BDD Railway ou fallback local
-  port: process.env.DB_PORT ? parseInt(process.env.DB_PORT) : 3306  // port Railway ou fallback 3306
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_NAME || 'test', 
+    port: process.env.DB_PORT || 4000
 });
 
-
-// Cette partie permet de verifier si la connexion au serveur à reussi(backend et phpmyadmin)
-db.connect((err)=>{
+db.connect((err) => {
     if(err){
-        console.log('erreur lors de la connexion',err.message)
+        console.log('Erreur connexion TiDB:', err.message);
         return;
     }
-    console.log('connexion à odc reussi')
-})
+    console.log('Connexion réussie à TiDB (base test)');
+});
 
 app.use(cors());//permet à la variable app d'utiliser cors pour les requetes http
 app.use(express.json())// app demande à express de pouvoir parser les valeurs en json() puisque de base il recevra un string depuis le frontend
@@ -395,4 +393,5 @@ app.put('/vols/:id', (req, res) => {
 
 
 
-app.listen(9100, ()=>console.log('api en cours'))//app.listen permet d'ecouter l'evenement de soumission(le plus souvent placé à la derniere ligne du code)
+const PORT = process.env.PORT || 9100;
+app.listen(PORT, () => console.log(`Serveur sur le port ${PORT}`));
